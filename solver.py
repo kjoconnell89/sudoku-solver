@@ -86,7 +86,7 @@ def findUnpopulated(startingBoard):
                 return(i, j)
 
 
-def validatePosition(startingBoard, value, position):
+def validatePosition(startingBoard, position, value):
     '''should always be a 9 x 9 board, don't need to make range dynamic
     i = row number, j = column number
     rules:
@@ -102,22 +102,40 @@ def validatePosition(startingBoard, value, position):
     -------
     '''
 
+    x = position[0]
+    y = position[1]
+
     #validate row
+    #check each element (column) in row and see if equal to number that we are adding in (value). dont check for position that we just added value to
+    for i in range(9):
+        if startingBoard[x][i] == value and y != i: 
+            return False
     
     #validate column
+    #check each element (row) in column and see if equal to number that we are adding in (value). dont check for position that we just added value to
+    for j in range(9):
+        if startingBoard[j][y] == value and x != j: 
+            return False
+
 
     #validate subgrid
-    
+    #can maybe use integer division on position parameter to determine subgrid -> posX // 3 & posY // 3   
 
 
-prettyBoard(board)
+    #all rules satisfied
+    return True
+
+#prettyBoard(board)
 
 def tester(position):
-    for item in subGrids:
-        if position in item:
-            print(item, '|', position)
-            print(item.index(position))
-            print(subGrids.index(item))
+    for section in subGrids:
+        if position in section:
+            gridSection = subGrids.index(section)
+            #subGridValues = subGrids[gridSection]
+            for subGridValue in subGrids[gridSection]:
+                print(subGridValue)                
+                #translate the subgrid positional values to corresponding numerical values in the starting board
 
 
-tester((0,0))
+
+tester((0,2))
