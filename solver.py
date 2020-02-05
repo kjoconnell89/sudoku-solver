@@ -17,6 +17,7 @@ startingBoard = [
 ]
 
 #these are permanent values across any iteration of a board
+#in no way is the necessary
 subGrids = [
     [(0, 0), (0, 1), (0, 2), (1, 0), (1, 1), (1, 2), (2, 0), (2, 1), (2, 2)], #subgrid 1
     [(0, 3), (0, 4), (0, 5), (1, 3), (1, 4), (1, 5), (2, 3), (2, 4), (2, 5)], #subgrid 2
@@ -71,6 +72,7 @@ def prettyBoard(currentBoard):
                         print('|', end = '')
                     
                     print(currentBoard[i][j], end = '')
+                    #print(' ', currentBoard[i][j], ' ', end = '')
 
                     if (j == 8):
                         print('|\n', end = '')
@@ -113,24 +115,28 @@ def validatePosition(currentBoard, position, value, subGrids):
     #check each element (column) in row and see if equal to number that we are adding in (value). dont check for position that we just added value to
     for i in range(9):
         if currentBoard[x][i] == value and y != i: 
-            print('{} does not work in ({}, {}) due to row'.format(value, x, y))
+            #print('{} does not work in ({}, {}) due to row'.format(value, x, y))
             return False
     
     #validate column
     #check each element (row) in column and see if equal to number that we are adding in (value). dont check for position that we just added value to
     for j in range(9):
         if currentBoard[j][y] == value and x != j: 
-            print('{} does not work in ({}, {}) due to column'.format(value, x, y))
+            #print('{} does not work in ({}, {}) due to column'.format(value, x, y))
             return False
 
 
     #validate subgrid
     #determine the subgrid in which the input position resides, then translate that subgrid to the current board state to determine if number we are adding already exists
-    #can maybe use integer division on position parameter to determine subgrid -> posX // 3 & posY // 3  
+    #can maybe use integer division on position parameter to determine subgrid -> posX // 3 & posY // 3
+    sectionValues = set()  
     for section in subGrids:
         if position in section:
-            if value in currentBoard[subGrids.index(section)]:
-                print('{} does not work in ({}, {}) due to subgrid'.format(value, x, y))
+            for (x, y) in section:
+                sectionValues.add(currentBoard[x][y])
+            
+            if value in sectionValues:
+                #print('{} does not work in ({}, {}) due to subgrid'.format(value, x, y))
                 return False
 
 
@@ -139,20 +145,19 @@ def validatePosition(currentBoard, position, value, subGrids):
 
 
 def solveBoard(currentBoard):
-    something = findUnpopulated(currentBoard)
+    emptySpace = findUnpopulated(currentBoard)
     
     #returning position of empty space, if board is full returns false
-    if not something:
+    if not emptySpace:
         return True
     else:
-        (x, y) = something
-        #print(something)
+        (x, y) = emptySpace
 
     #want to explicitly try values 1-9 as those are what should be populated according to the rules
     for i in range(1, 10):
         #determine if number is valid in specified position, and if so change the state of the board to reflect that
         if validatePosition(currentBoard, (x, y), i, subGrids):
-            print('{} put in {}'.format(i, (x,y)))
+            #print('{} put in {}'.format(i, (x,y)))
             currentBoard[x][y] = i
 
             #recursively attempt to fill in the remaining empty spaces
@@ -161,21 +166,15 @@ def solveBoard(currentBoard):
 
             #if we loop through 1-9 and no value is correct, the recursive call above should hit false and therefore 
             #that position needs to be backed out
-            print('backing out ({}, {})'.format(x, y))
+            #print('backing out {} from ({}, {})'.format(i, x, y))
             currentBoard[x][y] = 0
 
     return False
 
 
-print(prettyBoard(currentBoard))
-print('*************')
+prettyBoard(currentBoard)
 solveBoard(currentBoard)
-#print()
-#print('*************')
-#print()
-#print(prettyBoard(currentBoard))
-#print(validatePosition(currentBoard, (0,2), 5, subGrids))
-#print(findUnpopulated(currentBoard))
-
-###subgrid logic needs to be reviewed
-###trying to put 9 in (0,4) gives false subgrid error
+print()
+print('*************')
+print()
+prettyBoard(currentBoard)
