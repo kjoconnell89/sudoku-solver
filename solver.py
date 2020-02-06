@@ -5,15 +5,15 @@ A program to solve any given sudoku board, assuming it is solvable, utilizing ba
 
 #0s represent empty spaces -- would have used # but that would require string / int conversions
 startingBoard = [
-    [7, 8, 0, 4, 0, 0, 1, 2, 0],
-    [6, 0, 0, 0, 7, 5, 0, 0, 9],
-    [0, 0, 0, 6, 0, 1, 0, 7, 8],
-    [0, 0, 7, 0, 4, 0, 2, 6, 0],
-    [0, 0, 1, 0, 5, 0, 9, 3, 0],
-    [9, 0, 4, 0, 6, 0, 0, 0, 5],
-    [0, 7, 0, 3, 0, 0, 0, 1, 2],
-    [1, 2, 0, 0, 0, 7, 4, 0, 0],
-    [0, 4, 9, 2, 0, 6, 0, 0, 7]
+    [0, 0, 7, 0, 0, 3, 9, 0, 2],
+    [0, 0, 0, 8, 0, 0, 0, 0, 0],
+    [9, 4, 3, 0, 0, 0, 0, 0, 7],
+    [6, 9, 0, 0, 0, 0, 0, 0, 0],
+    [3, 0, 0, 5, 2, 7, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 8, 4, 0],
+    [0, 0, 0, 0, 4, 8, 0, 0, 0],
+    [2, 6, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 1, 2, 9]
 ]
 
 #these are permanent values across any iteration of a board
